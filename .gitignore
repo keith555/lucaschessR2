@@ -1,2 +1,4 @@
 UserData/
+.venv/
+__pycache__/
 

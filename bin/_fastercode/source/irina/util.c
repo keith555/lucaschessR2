@@ -1,3 +1,9 @@
+#ifdef _WIN32
+#pragma pack(push, 8)        // ensure default packing for Windows headers
+#include <windows.h>
+#include <conio.h>
+#pragma pack(pop)
+#endif
 #include <sys/types.h>
 #include <sys/timeb.h>
 #include <string.h>
