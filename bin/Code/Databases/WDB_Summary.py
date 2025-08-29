@@ -13,6 +13,7 @@ from Code.QT import Grid
 from Code.QT import Iconos
 from Code.QT import QTUtil2
 from Code.QT import QTVarios
+from Code.Engines import EngineRun
 
 
 class WSummary(QtWidgets.QWidget):
@@ -92,6 +93,10 @@ class WSummary(QtWidgets.QWidget):
         if not self.siMoves:
             layout.control(self.tb)
         layout.control(self.grid)
+
+        # Engine panel under the moves list (web-explorer style)
+        self.engine_panel = EngineCandidatesPanel(self, self.procesador)
+        layout.control(self.engine_panel)
         if self.siMoves:
             layout = Colocacion.H().control(self.tb).otro(layout)
 
@@ -103,6 +108,8 @@ class WSummary(QtWidgets.QWidget):
         if self.wdb_analysis:
             self.wdb_analysis.close()
             self.wdb_analysis = None
+        if hasattr(self, "engine_panel") and self.engine_panel:
+            self.engine_panel.finalize()
 
     def grid_doubleclick_header(self, grid, o_column):
         key = o_column.key
@@ -384,6 +391,9 @@ class WSummary(QtWidgets.QWidget):
         p.is_finished()
         p.assign_opening()
         self.infoMove.game_mode(p, 9999)
+        # Keep engine in sync with current pv/position
+        if hasattr(self, "engine_panel") and self.engine_panel:
+            self.engine_panel.set_game(p)
 
     def reset(self):
         self.actualizaPV(None)
@@ -495,147 +505,185 @@ class WSummaryBase(QtWidgets.QWidget):
 
         self.setLayout(layout)
 
-    def grid_doubleclick_header(self, grid, o_column):
-        key = o_column.key
 
-        if key == "move":
+class EngineCandidatesPanel(QtWidgets.QWidget):
+    def __init__(self, owner, procesador):
+        super().__init__()
+        self.owner = owner
+        self.procesador = procesador
+        self.configuration = procesador.configuration
+        self.with_figurines = self.configuration.x_pgn_withfigurines
+        self.game = Game.Game()
+        self.engine = None
+        self.li_moves = []
+        self.depth = 0
+        self.running = False
 
-            def func(dic):
-                return dic["move"].upper()
+        # Toolbar: start/stop toggle and depth label
+        self.bt_toggle = QTVarios.LCTB(self, with_text=True)
+        self.bt_toggle.new(_("Start engine"), Iconos.Kibitzer_Play(), self.start)
+        self.bt_toggle.new(_("Stop engine"), Iconos.Kibitzer_Pause(), self.stop)
+        self.bt_toggle.set_action_visible(self.stop, False)
 
-        else:
+        self.lbDepth = Controles.LB(self, "").anchoFijo(120)
 
-            def func(dic):
-                return dic[key]
+        # Grid to show top-N moves
+        o_columns = Columnas.ListaColumnas()
+        delegado_best = Delegados.EtiquetaPGN(True if self.with_figurines else None)
+        delegado_pgn = Delegados.LinePGN() if self.with_figurines else None
+        o_columns.nueva("BESTMOVE", _("Best move"), 100, align_center=True, edicion=delegado_best)
+        o_columns.nueva("EVALUATION", _("Evaluation"), 85, align_center=True)
+        o_columns.nueva("MAINLINE", _("Main line"), 500, edicion=delegado_pgn)
+        self.grid = Grid.Grid(self, o_columns, xid="db_engine_candidates", siSelecFilas=True)
+        self.grid.ponAltoFila(self.configuration.x_pgn_rowheight)
+        self.grid.font_type(puntos=self.configuration.x_pgn_fontpoints)
+        # Use all available width
+        try:
+            self.grid.horizontalHeader().setStretchLastSection(True)
+        except Exception:
+            pass
 
-        tot = self.liMoves[-1]
-        li = sorted(self.liMoves[:-1], key=func)
+        # Layout
+        top = Colocacion.H().control(self.bt_toggle).relleno().control(self.lbDepth)
+        layout = Colocacion.V().otro(top).control(self.grid).margen(2)
+        self.setLayout(layout)
 
-        orden, mas = self.orden
-        if orden == key:
-            mas = not mas
-        else:
-            mas = key == "move"
-        if not mas:
-            li.reverse()
-        self.orden = key, mas
-        li.append(tot)
-        self.liMoves = li
-        self.grid.refresh()
+        # Timer for polling engine output
+        self.timer = QtCore.QTimer(self)
+        self.timer.timeout.connect(self.check_input)
+        self.timer.setInterval(self.configuration.x_analyzer_mstime_refresh_ab or 200)
+        self._last_sig = None
 
+    def finalize(self):
+        self.stop()
+        self.timer.stop()
+
+    # Grid API
     def grid_num_datos(self, grid):
-        return len(self.liMoves)
+        return len(self.li_moves)
 
-    def grid_dato(self, grid, nfila, ocol):
-        key = ocol.key
-
-        # Last=Totals
-        if self.siFilaTotales(nfila):
-            if key in ("number", "pgames"):
-                return ""
-            elif key == "move":
-                return _("Total")
-
-        if self.liMoves[nfila]["games"] == 0 and key not in ("number", "move"):
+    def grid_dato(self, grid, row, o_column):
+        if not (0 <= row < len(self.li_moves)):
             return ""
-        v = self.liMoves[nfila][key]
-        if key.startswith("p"):
-            return "%.01f %%" % v
-        elif key == "number":
-            if self.with_figurines:
-                self.delegadoMove.setWhite("..." not in v)
-            return v
-        else:
-            return str(v)
+        rm = self.li_moves[row]
+        key = o_column.key
+        if key == "EVALUATION":
+            return rm.abbrev_text_base()
+        elif key == "BESTMOVE":
+            p = Game.Game(first_position=self.game.last_position)
+            p.read_pv(rm.get_pv())
+            if len(p) > 0:
+                move = p.li_moves[0]
+                resp = move.pgn_figurines() if self.with_figurines else move.pgn_translated()
+                return resp
+            return ""
+        else:  # MAINLINE
+            if rm.pv:
+                p = Game.Game(first_position=self.game.last_position)
+                p.read_pv(rm.pv)
+                if p.li_moves:
+                    move0 = p.li_moves[0]
+                    p.first_position = move0.position
+                    p.li_moves = p.li_moves[1:]
+                    txt = p.pgn_base_raw() if self.with_figurines else p.pgn_translated()
+                    return txt.lstrip("0123456789. ") if ".." in txt else txt
 
-    def posicionFila(self, nfila):
-        dic = self.liMoves[nfila]
-        li = [[k, dic[k]] for k in ("win", "draw", "lost")]
-        li = sorted(li, key=lambda x: x[1], reverse=True)
-        d = {}
-        prev = 0
-        ant = li[0][1]
-        total = 0
-        for cl, v in li:
-            if v < ant:
-                prev += 1
-            d[cl] = prev
-            ant = v
-            total += v
-        if total == 0:
-            d["win"] = d["draw"] = d["lost"] = -1
-        return d
+    def grid_doble_click(self, grid, row, o_column):
+        if 0 <= row < len(self.li_moves):
+            rm = self.li_moves[row]
+            # Apply selected engine move to explorer: update pvBase through owner
+            base_pv = self.game.pv()
+            # When game represents only base_pv, append the move
+            new_pv = (base_pv + " " + rm.movimiento()).strip()
+            self.owner.actualizaPV(new_pv)
+            # Keep engine and list in sync immediately
+            g = Game.Game(first_position=self.game.first_position)
+            g.read_pv(new_pv)
+            self.set_game(g)
+            try:
+                self.owner.grid.refresh()
+                self.owner.grid.gotop()
+                sm = self.owner.grid.selectionModel()
+                if sm is not None:
+                    sm.clearSelection()
+            except Exception:
+                pass
 
-    def grid_color_fondo(self, grid, nfila, ocol):
-        key = ocol.key
-        if self.siFilaTotales(nfila) and key not in ("number", "analysis"):
-            return Code.dic_qcolors["SUMMARY_TOTAL"]
-        if key in ("pwin", "pdraw", "plost"):
-            dic = self.posicionFila(nfila)
-            n = dic[key[1:]]
-            if n == 0:
-                return Code.dic_qcolors["SUMMARY_WIN"]
-            if n == 2:
-                return Code.dic_qcolors["SUMMARY_LOST"]
+    # Engine control
+    def build_engine(self):
+        conf_engine = self.configuration.engine_analyzer()
+        # Choose a reasonable MultiPV
+        multi = conf_engine.multiPV or min(conf_engine.maxMultiPV or 1, 10)
+        if multi < 1:
+            multi = 1
+        return EngineRun.RunEngine(conf_engine.name, conf_engine.path_exe, conf_engine.liUCI, multi,
+                                   priority=self.configuration.x_analyzer_priority, args=conf_engine.args)
 
-    def grid_color_texto(self, grid, nfila, ocol):
-        if self.foreground:
-            key = ocol.key
-            if self.siFilaTotales(nfila) or key in ("pwin", "pdraw", "plost"):
-                return self.foreground
-
-    def siFilaTotales(self, nfila):
-        return nfila == len(self.liMoves) - 1
-
-    def noFilaTotales(self, nfila):
-        return nfila < len(self.liMoves) - 1
-
-    def actualizaPV(self, pvBase):
-        self.pvBase = pvBase
-        if not pvBase:
-            pvMirar = ""
-        else:
-            pvMirar = self.pvBase
-
-        self.liMoves = self.db_stat.get_summary(pvMirar, {}, self.with_figurines, False)
-
+    def start(self):
+        if self.running:
+            return
+        try:
+            self.engine = self.build_engine()
+        except Exception:
+            self.engine = None
+        if not self.engine:
+            return
+        self.running = True
+        self.bt_toggle.set_action_visible(self.start, False)
+        self.bt_toggle.set_action_visible(self.stop, True)
+        self.depth = 0
+        self.li_moves = []
+        self._last_sig = None
         self.grid.refresh()
-        # Do not auto-select the first move; leave no selection by default
-        sm = self.grid.selectionModel()
-        if sm is not None:
-            sm.clearSelection()
-            sm.setCurrentIndex(QtCore.QModelIndex(), QtCore.QItemSelectionModel.NoUpdate)
-        self.grid.clearSelection()
+        self.restart_engine_on_game()
+        self.timer.start()
 
-    def grid_right_button(self, grid, row, column, modificadores):
-        if self.siFilaTotales(row):
+    def stop(self):
+        if self.engine:
+            try:
+                self.engine.ac_final(0)
+                self.engine.close()
+            except Exception:
+                pass
+            self.engine = None
+        self.running = False
+        self.bt_toggle.set_action_visible(self.start, True)
+        self.bt_toggle.set_action_visible(self.stop, False)
+        self.timer.stop()
+        self.lbDepth.set_text("")
+        self._last_sig = None
+
+    def set_game(self, game: Game.Game):
+        # game is a copy for current pv/position
+        if game is None:
+            game = Game.Game()
+        self.game = game
+        if self.running:
+            self.restart_engine_on_game()
+
+    def restart_engine_on_game(self):
+        if not self.engine:
             return
-        alm = self.liMoves[row]["rec"]
-        if not alm or not hasattr(alm, "LIALMS") or len(alm.LIALMS) < 2:
+        try:
+            # Ensure previous search is stopped promptly before starting a new one
+            self.engine.put_line("stop")
+            self.engine.ac_inicio(self.game)
+        except Exception:
+            pass
+
+    def check_input(self):
+        if not (self.engine and self.running):
             return
-
-        menu = QTVarios.LCMenu(self)
-        rondo = QTVarios.rondo_puntos()
-        for ralm in alm.LIALMS:
-            menu.opcion(ralm, Game.pv_pgn(None, ralm.PV), rondo.otro())
-            menu.separador()
-        resp = menu.lanza()
-        if resp:
-            self.actualizaPV(resp.PV)
-
-    def grid_tecla_control(self, grid, k, is_shift, is_control, is_alt):
-        if k in (QtCore.Qt.Key_Enter, QtCore.Qt.Key_Return):
-            self.siguiente()
-
-    def grid_doble_click(self, grid, fil, col):
-        self.siguiente()
-
-    def siguiente(self):
-        recno = self.grid.recno()
-        if recno >= 0 and self.noFilaTotales(recno):
-            dic = self.liMoves[recno]
-            if "pv" in dic:
-                pv = dic["pv"]
-                if pv.count(" ") > 0:
-                    pv = "%s %s" % (self.pvBase, dic["pvmove"])
-                self.actualizaPV(pv)
+        mrm = self.engine.ac_estado()
+        rm = mrm.rm_best()
+        if rm is None:
+            return
+        best = rm.movimiento() or rm.get_pv()
+        best = best.split(" ")[0] if best else ""
+        sig = (rm.depth, len(mrm.li_rm), best)
+        if sig != self._last_sig:
+            self._last_sig = sig
+            self.depth = rm.depth
+            self.li_moves = mrm.li_rm
+            self.lbDepth.set_text(f"Depth: {rm.depth}")
+            self.grid.refresh()

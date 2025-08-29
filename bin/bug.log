@@ -1,1 +1,181 @@
 Version R 2.20c
+2025-08-30 00:21:36.422471
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.429599
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.436252
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.442252
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.449374
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.456374
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.462529
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.471527
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.477536
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.522384
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.529535
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.569498
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.598247
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.605247
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.643415
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.651518
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.708221
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:36.716349
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:44.558008
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:21:44.563999
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 622, in start
+    self.grid.refresh()
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 598, in refresh
+    self.cg.refresh()
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 63, in refresh
+    nue_ndatos = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:24:43.910424
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:24:43.917630
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 622, in start
+    self.grid.refresh()
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 598, in refresh
+    self.cg.refresh()
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 63, in refresh
+    nue_ndatos = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:25:07.662864
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 53, in rowCount
+    self.num_rows = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
+2025-08-30 00:25:07.668879
+Traceback (most recent call last):
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 622, in start
+    self.grid.refresh()
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 598, in refresh
+    self.cg.refresh()
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\QT\Grid.py", line 63, in refresh
+    nue_ndatos = self.w_parent.grid_num_datos(self.grid)
+  File "C:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 698, in grid_num_datos
+    return len(self.liMoves)
+AttributeError: 'EngineCandidatesPanel' object has no attribute 'liMoves'. Did you mean: 'li_moves'?
