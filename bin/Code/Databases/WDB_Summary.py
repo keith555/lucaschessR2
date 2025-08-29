@@ -41,6 +41,8 @@ class WSummary(QtWidgets.QWidget):
         self.pvBase = ""
 
         self.orden = ["games", False]
+        # Suppress the first auto-selection driven by external sync
+        self._suppress_next_auto_goto = True
 
         self.lbName = (
             Controles.LB(self, "")
@@ -49,6 +51,7 @@ class WSummary(QtWidgets.QWidget):
             .set_foreground_backgound("white", "#4E5A65")
             .set_font_type(puntos=10 if siMoves else 16)
         )
+        self._lb_base_text = ""
         if not siMoves:
             self.lbName.hide()
 
@@ -56,7 +59,7 @@ class WSummary(QtWidgets.QWidget):
         o_columns = Columnas.ListaColumnas()
         o_columns.nueva("number", _("N."), 35, align_center=True)
         self.delegadoMove = Delegados.EtiquetaPGN(True if self.with_figurines else None)
-        o_columns.nueva("move", _("Move"), 60, edicion=self.delegadoMove)
+        o_columns.nueva("move", _("Move") + " *", 60, edicion=self.delegadoMove)
         o_columns.nueva("analysis", _("Analysis"), 60, align_right=True)
         o_columns.nueva("games", _("Games"), 70, align_right=True)
         o_columns.nueva("pgames", "% " + _("Games"), 70, align_right=True)
@@ -232,14 +235,14 @@ class WSummary(QtWidgets.QWidget):
 
     def start(self):
         self.actualizaPV("")
-        self.cambiaInfoMove()
+        # Board is updated in actualizaPV to reflect pvBase
 
     def anterior(self):
         if self.pvBase:
             pv = self.popPV(self.pvBase)
 
             self.actualizaPV(pv)
-            self.cambiaInfoMove()
+            # Board is updated in actualizaPV to reflect pvBase
 
     def rehazActual(self):
         recno = self.grid.recno()
@@ -262,7 +265,7 @@ class WSummary(QtWidgets.QWidget):
                 if pv.count(" ") > 0:
                     pv = "%s %s" % (self.pvBase, dic["pvmove"])
                 self.actualizaPV(pv)
-                self.cambiaInfoMove()
+                # Board is updated in actualizaPV to reflect pvBase
 
     def reindexar(self):
         return self.reindexar_question(self.db_games.depth_stat(), True)
@@ -333,6 +336,10 @@ class WSummary(QtWidgets.QWidget):
         movActual = self.infoMove.movActual
         pvBase = self.popPV(movActual.allPV())
         self.actualizaPV(pvBase)
+        # On first open, do not auto-follow current move; wait for user input
+        if self._suppress_next_auto_goto:
+            self._suppress_next_auto_goto = False
+            return
         if movActual:
             pv = movActual.allPV()
             for n in range(len(self.liMoves) - 1):
@@ -355,18 +362,54 @@ class WSummary(QtWidgets.QWidget):
         self.liMoves = self.db_games.get_summary(pvMirar, dic_analisis, self.with_figurines, self.allmoves)
 
         self.grid.refresh()
-        self.grid.gotop()
+        # Do not auto-select the first move; leave no selection by default
+        sm = self.grid.selectionModel()
+        if sm is not None:
+            sm.clearSelection()
+            sm.setCurrentIndex(QtCore.QModelIndex(), QtCore.QItemSelectionModel.NoUpdate)
+        self.grid.clearSelection()
+        # Update board to reflect the current pvBase regardless of selection
+        self.showBoardForPVBase()
+        # Visual cue to confirm: append a tag when nothing is selected (only in siMoves mode)
+        if self.siMoves and not pvMirar:
+            if self._lb_base_text:
+                self.lbName.set_text(f"{self._lb_base_text} [No move selected]")
+
+    def showBoardForPVBase(self):
+        if not self.infoMove:
+            return
+        p = Game.Game()
+        if self.pvBase:
+            p.read_pv(self.pvBase)
+        p.is_finished()
+        p.assign_opening()
+        self.infoMove.game_mode(p, 9999)
 
     def reset(self):
         self.actualizaPV(None)
         self.grid.refresh()
-        self.grid.gotop()
+        # Leave grid without selection after reset
+        sm = self.grid.selectionModel()
+        if sm is not None:
+            sm.clearSelection()
+            sm.setCurrentIndex(QtCore.QModelIndex(), QtCore.QItemSelectionModel.NoUpdate)
+        self.grid.clearSelection()
 
     def grid_cambiado_registro(self, grid, row, oCol):
+        # Keep this lightweight: only update info pane on selection changes.
+        # The actual move application happens on left-click via grid_left_button.
         if self.grid.hasFocus() or self.hasFocus():
             self.cambiaInfoMove()
 
+    def grid_left_button(self, grid, row, column):
+        # Single-click on a candidate applies it immediately.
+        if row is not None and row >= 0 and self.noFilaTotales(row):
+            self.siguiente()
+
     def cambiaInfoMove(self):
+        sm = self.grid.selectionModel()
+        if sm is None or not sm.hasSelection():
+            return
         row = self.grid.recno()
         if row >= 0 and self.noFilaTotales(row):
             pv = self.liMoves[row]["pv"]
@@ -377,10 +420,19 @@ class WSummary(QtWidgets.QWidget):
             self.infoMove.game_mode(p, 9999)
             self.setFocus()
             self.grid.setFocus()
+            # Restore base label when a move is selected
+            if self.siMoves and self._lb_base_text:
+                self.lbName.set_text(self._lb_base_text)
 
     def showActiveName(self, name):
         # Llamado de WBG_Games -> setNameToolbar
-        self.lbName.set_text(_("Opening explorer of %s") % name)
+        base = _("Opening explorer of %s") % name
+        self._lb_base_text = base
+        # If no current selection and at root PV, keep the cue visible
+        if self.siMoves and (not self.pvBase or not self.grid.currentIndex().isValid()):
+            self.lbName.set_text(f"{base} [No move selected]")
+        else:
+            self.lbName.set_text(base)
 
     def leeConfig(self):
         dicConfig = self.configuration.read_variables("DBSUMMARY")
@@ -423,7 +475,7 @@ class WSummaryBase(QtWidgets.QWidget):
         o_columns = Columnas.ListaColumnas()
         o_columns.nueva("number", _("N."), 35, align_center=True)
         self.delegadoMove = Delegados.EtiquetaPGN(True if self.with_figurines else None)
-        o_columns.nueva("move", _("Move"), 60, edicion=self.delegadoMove)
+        o_columns.nueva("move", _("Move") + " *", 60, edicion=self.delegadoMove)
         o_columns.nueva("games", _("Games"), 70, align_right=True)
         o_columns.nueva("pgames", "% " + _("Games"), 70, align_right=True, align_center=True)
         o_columns.nueva("win", _("Win"), 70, align_right=True)
@@ -548,7 +600,12 @@ class WSummaryBase(QtWidgets.QWidget):
         self.liMoves = self.db_stat.get_summary(pvMirar, {}, self.with_figurines, False)
 
         self.grid.refresh()
-        self.grid.gotop()
+        # Do not auto-select the first move; leave no selection by default
+        sm = self.grid.selectionModel()
+        if sm is not None:
+            sm.clearSelection()
+            sm.setCurrentIndex(QtCore.QModelIndex(), QtCore.QItemSelectionModel.NoUpdate)
+        self.grid.clearSelection()
 
     def grid_right_button(self, grid, row, column, modificadores):
         if self.siFilaTotales(row):
