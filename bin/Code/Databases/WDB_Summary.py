@@ -651,6 +651,12 @@ class EngineCandidatesPanel(QtWidgets.QWidget):
         self.bt_toggle.set_action_visible(self.stop, False)
         self.timer.stop()
         self.lbDepth.set_text("")
+        # Clear engine suggestion arrows on stop
+        try:
+            if self.owner and self.owner.infoMove and self.owner.infoMove.board:
+                self.owner.infoMove.board.remove_arrows()
+        except Exception:
+            pass
         self._last_sig = None
 
     def set_game(self, game: Game.Game):
@@ -687,3 +693,36 @@ class EngineCandidatesPanel(QtWidgets.QWidget):
             self.li_moves = mrm.li_rm
             self.lbDepth.set_text(f"Depth: {rm.depth}")
             self.grid.refresh()
+            self.draw_suggestion_arrows()
+
+    def draw_suggestion_arrows(self):
+        # Draw up to 3 engine suggestion arrows with decreasing opacity
+        try:
+            board = self.owner.infoMove.board if self.owner and self.owner.infoMove else None
+        except Exception:
+            board = None
+        if board is None:
+            return
+        try:
+            board.remove_arrows()
+        except Exception:
+            pass
+        if not self.li_moves:
+            return
+        # Define opacities for top 3 suggestions
+        opacities = [0.85, 0.55, 0.35]
+        for i, rm in enumerate(self.li_moves[:3]):
+            tok = (rm.movimiento() or rm.get_pv() or "").split(" ")[0]
+            if len(tok) < 4:
+                continue
+            from_sq, to_sq = tok[:2], tok[2:4]
+            try:
+                # Use different styles for first vs others (mt/ms), like other modules
+                style = "mt" if i == 0 else "ms"
+                # Some boards expose show_arrow_mov; fall back to creaFlechaTmp if needed
+                if hasattr(board, "show_arrow_mov"):
+                    board.show_arrow_mov(from_sq, to_sq, style, opacity=opacities[i])
+                elif hasattr(board, "creaFlechaTmp"):
+                    board.creaFlechaTmp(from_sq, to_sq, False)
+            except Exception:
+                continue
