@@ -190,12 +190,20 @@ class ManagerPlayAgainstEngine(Manager.Manager):
             self.book_rival_depth = dic_var.get("BOOKRDEPTH", 0)
             self.book_rival.polyglot()
             self.book_rival_select = dic_var.get("BOOKRR", BOOK_BEST_MOVE)
+            try:
+                print(f"[PAE] Rival book set: name={self.book_rival.name} depth={self.book_rival_depth} mode={self.book_rival_select}", file=sys.stderr)
+            except Exception:
+                pass
         elif self.conf_engine.book and Util.exist_file(self.conf_engine.book):
             self.book_rival_active = True
             self.book_rival = Books.Book("P", self.conf_engine.book, self.conf_engine.book, True)
             self.book_rival.polyglot()
             self.book_rival_select = BOOK_BEST_MOVE
             self.book_rival_depth = getattr(self.conf_engine, "book_max_plies", 0)
+            try:
+                print(f"[PAE] Rival engine default book: path={self.conf_engine.book} depth={self.book_rival_depth}", file=sys.stderr)
+            except Exception:
+                pass
 
         self.book_player_active = False
         self.book_player = dic_var.get("BOOKP", None)
@@ -203,6 +211,58 @@ class ManagerPlayAgainstEngine(Manager.Manager):
             self.book_player_active = True
             self.book_player_depth = dic_var.get("BOOKPDEPTH", 0)
             self.book_player.polyglot()
+            try:
+                print(f"[PAE] Player book set: name={self.book_player.name} depth={self.book_player_depth}", file=sys.stderr)
+            except Exception:
+                pass
+
+        # Ensure the move rating/book icon logic uses the session books
+        # Instead of the global default, prefer the books selected for this game
+        # so the PGN move list shows the correct book marker.
+        class _SessionBookChecker:
+            def __init__(self, books):
+                # books: list of Books.Book or None
+                self.books = [b for b in books if b is not None]
+                # Polyglot objects are created on demand by Books.Book methods,
+                # but ensure they are ready for checks.
+                for b in self.books:
+                    try:
+                        if not hasattr(b, "book"):
+                            b.polyglot()
+                    except Exception:
+                        pass
+
+            def check_human(self, fen, from_sq, to_sq):
+                try:
+                    for b in self.books:
+                        li = b.book.lista(b.path, fen)
+                        if not li:
+                            continue
+                        for entry in li:
+                            pv = entry.pv()
+                            if pv[:2] == from_sq and pv[2:4] == to_sq:
+                                try:
+                                    print(f"[PAE] SessionBookChecker match: book={b.name} fen={fen} move={from_sq}{to_sq}", file=sys.stderr)
+                                except Exception:
+                                    pass
+                                return True
+                except Exception:
+                    pass
+                return False
+
+        # Assign preferred checker if any selected book is active; otherwise keep default
+        session_books = []
+        if self.book_rival_active and self.book_rival:
+            session_books.append(self.book_rival)
+        if self.book_player_active and self.book_player:
+            session_books.append(self.book_player)
+        if session_books:
+            self.ap_ratings = _SessionBookChecker(session_books)
+            try:
+                bnames = ", ".join([b.name for b in session_books])
+                print(f"[PAE] Using session books for UI ratings: {bnames}", file=sys.stderr)
+            except Exception:
+                pass
 
         self.is_tutor_enabled = self.configuration.x_default_tutor_active
         self.main_window.set_activate_tutor(self.is_tutor_enabled)
@@ -1138,6 +1198,12 @@ class ManagerPlayAgainstEngine(Manager.Manager):
 
     def select_book_move_base(self, book, book_select):
         fen = self.last_fen()
+        # Log available entries and selection mode
+        try:
+            li = book.book.lista(book.path, fen)
+            print(f"[PAE] Book query: book={book.name} entries={len(li)} mode={book_select} ply={len(self.game)}", file=sys.stderr)
+        except Exception:
+            pass
 
         if book_select == SELECTED_BY_PLAYER:
             lista_jugadas = book.get_list_moves(fen)
@@ -1147,8 +1213,16 @@ class ManagerPlayAgainstEngine(Manager.Manager):
         else:
             pv = book.eligeJugadaTipo(fen, book_select)
             if pv:
+                try:
+                    print(f"[PAE] Book selected pv={pv}", file=sys.stderr)
+                except Exception:
+                    pass
                 return True, pv[:2], pv[2:4], pv[4:]
 
+        try:
+            print(f"[PAE] Book has no move for this position", file=sys.stderr)
+        except Exception:
+            pass
         return False, None, None, None
 
     def select_book_move(self):
@@ -1224,14 +1298,14 @@ class ManagerPlayAgainstEngine(Manager.Manager):
 
         # BOOK----------------------------------------------------------------------------------------------------------
         if not is_choosed and self.book_rival_active:
+            # Try book whenever within depth; do not permanently disable the book
+            # so it can be used later in the opening if available.
             if self.book_rival_depth == 0 or self.book_rival_depth > len(self.game):
                 is_choosed, from_sq, to_sq, promotion = self.select_book_move()
-
-                if not is_choosed:
-                    self.dic_reject["book_rival"] += 1
-            else:
-                self.dic_reject["book_rival"] += 1
-            self.book_rival_active = self.dic_reject["book_rival"] <= 5
+                try:
+                    print(f"[PAE] Engine book try: ok={is_choosed}", file=sys.stderr)
+                except Exception:
+                    pass
             self.show_basic_label()
 
         if not is_choosed and self.siBookAjustarFuerza:
@@ -1301,6 +1375,14 @@ class ManagerPlayAgainstEngine(Manager.Manager):
             fen_ultimo = self.last_fen()
             move.set_time_ms(int(time_s * 1000))
             move.set_clock_ms(int(self.tc_rival.pending_time * 1000))
+            # Mark the move as coming from a book when we selected it from the book
+            # so the UI displays the correct book icon for engine book moves.
+            if getattr(rm_rival, "name", "") == "Opening":
+                try:
+                    move.is_book = True
+                    print(f"[PAE] Mark move as book (engine): {rm_rival.from_sq}{rm_rival.to_sq}", file=sys.stderr)
+                except Exception:
+                    pass
             self.add_move(move)
             self.move_the_pieces(move.liMovs, True)
             self.beep_extended(False)
@@ -1364,6 +1446,7 @@ class ManagerPlayAgainstEngine(Manager.Manager):
         a1h8 = move.movimiento()
         si_analisis = False
         is_choosed = False
+        user_move_is_book = False
         fen_base = self.last_fen()
         fen_basem2 = FasterCode.fen_fenm2(fen_base)
         game_over_message_pww = None
@@ -1418,12 +1501,21 @@ class ManagerPlayAgainstEngine(Manager.Manager):
             test_book = False
             if self.book_player_depth == 0 or self.book_player_depth > len(self.game):
                 lista_jugadas = self.book_player.get_list_moves(fen_base)
+                try:
+                    print(f"[PAE] Player book entries={len(lista_jugadas)} ply={len(self.game)}", file=sys.stderr)
+                except Exception:
+                    pass
                 if lista_jugadas:
                     li = []
                     for apdesde, aphasta, appromotion, nada, nada1 in lista_jugadas:
                         mx = apdesde + aphasta + appromotion
                         if mx.strip().lower() == a1h8:
                             is_choosed = True
+                            user_move_is_book = True
+                            try:
+                                print(f"[PAE] Player move is in book: {a1h8}", file=sys.stderr)
+                            except Exception:
+                                pass
                             break
                         li.append((apdesde, aphasta, False))
                     if not is_choosed:
@@ -1443,7 +1535,8 @@ class ManagerPlayAgainstEngine(Manager.Manager):
                 test_book = True
             if test_book:
                 self.dic_reject["book_player"] += 1
-                self.book_player_active = self.dic_reject["book_player"] > 5
+                # Keep player's book active for future positions up to a limit
+                self.book_player_active = self.dic_reject["book_player"] <= 5
             self.show_basic_label()
 
         # TUTOR---------------------------------------------------------------------------------------------------------
@@ -1548,6 +1641,13 @@ class ManagerPlayAgainstEngine(Manager.Manager):
         if not self.disable_user_time:
             move.set_clock_ms(self.tc_player.pending_time * 1000)
         self.set_summary("TIMEUSER", time_s)
+
+        if user_move_is_book:
+            try:
+                move.is_book = True
+                print(f"[PAE] Mark move as book (player): {from_sq}{to_sq}", file=sys.stderr)
+            except Exception:
+                pass
 
         if si_analisis:
             rm, n_pos = self.mrm_tutor.search_rm(move.movimiento())
