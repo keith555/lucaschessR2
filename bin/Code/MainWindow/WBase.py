@@ -571,14 +571,19 @@ class WBase(QtWidgets.QWidget):
             if color_nag == NAG_0:  # Son prioritarios los nags manuales
                 nothing, color_nag = mrm.set_nag_color(rm)
 
-        is_opening = move.is_book_move()
-
-        if is_opening or move.comment or move.variations:
-            image_initial = "O" if is_opening else ""
+        # Initial icon in PGN: show a book icon when the move came from a book,
+        # even if it is no longer considered in_the_opening by the classifier.
+        # Keep existing indicators for variations and comments.
+        if move.in_the_opening or move.comment or move.variations or (move.is_book is True):
+            image_initial = ""
+            if move.in_the_opening or (move.is_book is True):
+                image_initial += "O"
             if len(move.variations) > 0:
                 image_initial += "V"
             if move.comment:
                 image_initial += "C"
+            if not image_initial:
+                image_initial = None
 
         pgn = move.pgn_figurines() if Code.configuration.x_pgn_withfigurines else move.pgn_translated()
         if color_nag:

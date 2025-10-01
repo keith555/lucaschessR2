@@ -151,6 +151,8 @@ class WBDatabase(LCDialog.LCDialog):
             self.wgames.actualiza()
         elif ntab == 1:
             self.wsummary.gridActualiza()
+            # Ensure board reflects current pvBase when no move is selected
+            self.wsummary.showBoardForPVBase()
         elif ntab == 2:
             self.wplayer.actualiza()
         elif ntab == 3:
