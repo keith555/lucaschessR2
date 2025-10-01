@@ -579,20 +579,22 @@ class Manager:
                 rm = mrm.li_rm[pos]
                 nag, color = mrm.set_nag_color(rm)
         if nag == NO_RATING:
-            if move_check.in_the_opening:
-                nag = 1000
-            elif color == GOOD_MOVE:
-                nag = 999
-            else:
+            # Prefer explicit book mark (polyglot) over generic opening tag icon
+            if move_check.is_book is True:
+                nag = 1001
+            elif move_check.is_book is None:
+                if self.ap_ratings is None:
+                    self.ap_ratings = Opening.OpeningGM()
+                move_check.is_book = self.ap_ratings.check_human(
+                    move_check.position_before.fen(), move_check.from_sq, move_check.to_sq
+                )
                 if move_check.is_book:
                     nag = 1001
-                elif move_check.is_book is None:
-                    if self.ap_ratings is None:
-                        self.ap_ratings = Opening.OpeningGM()
-                    move_check.is_book = self.ap_ratings.check_human(move_check.position_before.fen(),
-                                                                     move_check.from_sq, move_check.to_sq)
-                    if move_check.is_book:
-                        nag = 1001
+            if nag == NO_RATING:
+                if move_check.in_the_opening:
+                    nag = 1000
+                elif color == GOOD_MOVE:
+                    nag = 999
         poscelda = 0 if (move_check.to_sq[0] < move_check.from_sq[0]) and (
                 move_check.to_sq[1] < move_check.from_sq[1]) else 1
         if nag != NO_RATING or (nag == NO_RATING and move_check.analysis):

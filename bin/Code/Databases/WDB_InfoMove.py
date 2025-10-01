@@ -192,7 +192,9 @@ class WInfomove(QtWidgets.QWidget):
         position = move.position
 
         self.board.set_position(position)
-        self.board.put_arrow_sc(move.from_sq, move.to_sq)
+        # Do not draw an arrow on selection; play immediately like web explorers
+        if hasattr(self.board, "remove_arrows"):
+            self.board.remove_arrows()
 
         self.board.disable_all()
 
