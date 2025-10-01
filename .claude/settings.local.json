@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git branch:*)",
+      "Bash(.venvScriptspython.exe --version)",
+      "Bash(\".venv/Scripts/python.exe\" --version)",
+      "Bash(\"../../../.venv/Scripts/python.exe\" setup.py build_ext --inplace)",
+      "Bash(\"../.venv/Scripts/python.exe\":*)",
+      "Bash(git check-ignore:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

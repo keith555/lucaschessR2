@@ -8,3 +8,4 @@ bin/bug.log*
 *.pyd
 bin/_fastercode/source/**/*.obj
 bin/_fastercode/source/*.lib
+bin/_fastercode/source/build/

@@ -2357,6 +2357,9 @@ static CYTHON_INLINE PyObject* __Pyx_PyBytes_Join(PyObject* sep, PyObject* value
 /* PyLongCompare.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyLong_EqObjC(PyObject *op1, PyObject *op2, long intval, long inplace);
 
+/* DivInt[Py_ssize_t].proto */
+static CYTHON_INLINE Py_ssize_t __Pyx_div_Py_ssize_t(Py_ssize_t, Py_ssize_t, int b_is_constant);
+
 /* decode_c_bytes.proto */
 static CYTHON_INLINE PyObject* __Pyx_decode_c_bytes(
          const char* cstring, Py_ssize_t length, Py_ssize_t start, Py_ssize_t stop,
@@ -2381,9 +2384,6 @@ static CYTHON_INLINE PyObject* __Pyx_decode_bytearray(
         as_c_string, size,
         start, stop, encoding, errors, decode_func);
 }
-
-/* DivInt[Py_ssize_t].proto */
-static CYTHON_INLINE Py_ssize_t __Pyx_div_Py_ssize_t(Py_ssize_t, Py_ssize_t, int b_is_constant);
 
 /* ObjectGetItem.proto */
 #if CYTHON_USE_TYPE_SLOTS
@@ -2886,7 +2886,7 @@ static const char __pyx_k_valor[] = "valor";
 static const char __pyx_k_value[] = "value";
 static const char __pyx_k_write[] = "write";
 static const char __pyx_k_xfrom[] = "xfrom";
-static const char __pyx_k_4s_T_1[] = "\320\000\020\220\001\330\004\013\2104\210s\220#\220T\230\022\2301";
+static const char __pyx_k_4s_T_1[] = "\320\000\020\220\010\230\001\330\004\013\2104\210s\220#\220T\230\022\2301";
 static const char __pyx_k_A_1HG1[] = "\200A\330\010\023\2201\220H\230G\2401";
 static const char __pyx_k_A_M_IU[] = "\200A\330\010\014\210M\230\021\360\034\000\t\r\210I\220U\230!";
 static const char __pyx_k_A_t5_q[] = "\200A\330\010\017\210t\2205\230\007\230q\240\001";
@@ -3123,9 +3123,9 @@ static const char __pyx_k_gQas_AS_4s_Qd_Q_a_Ct3a_1[] = "\200\001\340\004\t\320\t
 static const char __pyx_k_1A_Ya_M_U_1_XQb_2XQ_gQa_1[] = "\200\001\330\004\013\2101\210A\330\004\r\210Y\220a\330\004\014\210M\230\021\330\004\t\210\021\330\004\010\210\005\210U\220!\2201\330\010\r\210X\220Q\220b\230\002\230!\330\010\013\2102\210X\220Q\330\014\016\210g\220Q\220a\330\004\013\2101";
 static const char __pyx_k_A_d_uAQ_3auCq_6_E_3c_1_wa[] = "\200A\330\010\016\210d\220%\220u\230A\230Q\330\010\013\2103\210a\210u\220C\220q\330\014\023\2206\230\021\330\010\014\210E\220\021\330\014\021\220\022\2203\220c\230\022\2301\330\010\017\210w\220a";
 static const char __pyx_k_Q_E_WAQ_a_oQ_Rwe1_t4q_q_1[] = "\320\000\023\220:\230Q\330\004\014\210E\220\027\230\001\230\021\330\004\n\210#\210W\220A\220Q\330\004\021\220\025\220a\220{\240,\250o\270Q\330\004\n\210+\220R\220w\230e\2401\330\004\007\200t\2104\210q\330\010\017\210q\340\004\020\220\001\220\021\340\004\013\2101";
-static const char __pyx_k_5_q_q_Q_9AS_c_Be6_q_t2T_q_q[] = "\200\001\330\004\013\2105\220\001\220\026\220q\330\004\n\210%\210q\220\005\220Q\330\004\013\2109\220A\220S\230\001\230\025\230c\240\021\330\004\n\210*\220B\220e\2306\240\021\330\004\007\200q\330\010\017\210t\2202\220T\230\027\240\001\240\030\250\026\250q\260\001\340\010\017\210q";
 static const char __pyx_k_D_ar_AQ_E_q_Q_a_Rwe1_t4q_q_1[] = "\200\001\330\004\014\210D\220\002\220!\330\004\n\210$\210a\210r\220\021\330\004\020\220\004\220A\220Q\330\004\014\210E\220\021\220'\230\021\330\004\n\210%\210q\220\005\220Q\330\004\021\220\025\220a\220{\240!\330\004\n\210+\220R\220w\230e\2401\330\004\007\200t\2104\210q\330\010\017\210q\340\004\020\220\001\220\021\330\004\013\2101";
 static const char __pyx_k_5XQ_wgQa_oQ_Ql_A_t4q_q_5_3gQa[] = "\320\000\027\220~\320%5\260X\270Q\360\006\000\005\022\220\031\230'\240\021\240!\330\004\017\210w\220g\230Q\230a\330\004\021\220\031\230'\240\021\240,\250o\270Q\340\004\n\210+\220Q\220l\240*\250A\330\004\007\200t\2104\210q\330\010\017\210q\340\004\n\210!\2105\220\001\330\004\013\2103\210g\220Q\220a";
+static const char __pyx_k_5_q_q_Q_9AS_ar_1_Be6_q_t2T_q_q[] = "\200\001\330\004\013\2105\220\001\220\026\220q\330\004\n\210%\210q\220\005\220Q\330\004\013\2109\220A\220S\230\001\230\025\230a\230r\240\022\2401\330\004\n\210*\220B\220e\2306\240\021\330\004\007\200q\330\010\017\210t\2202\220T\230\027\240\001\240\030\250\026\250q\260\001\340\010\017\210q";
 static const char __pyx_k_G1_b_BfAU_2S_s_6_c_c_c_b_AU_4s[] = "\320\000\024\220G\2301\330\004\n\210&\220\001\220\025\220b\230\004\230B\230f\240A\240U\250!\2502\250S\260\001\260\021\330\004\007\200s\210!\2106\220\021\220!\330\010\021\220\025\220c\230\025\230c\240\025\240c\250\025\250b\260\004\260A\260U\270!\2704\270s\300!\3002\300Q\300a\330\004\013\2101";
 static const char __pyx_k_Z_q_E_q_Q_a_oQ_Rwe1_t4q_q_xq_1[] = "\320\000\025\220Z\320\037/\250q\330\004\014\210E\220\021\220'\230\021\330\004\n\210%\210q\220\005\220Q\330\004\021\220\025\220a\220{\240,\250o\270Q\330\004\n\210+\220R\220w\230e\2401\330\004\007\200t\2104\210q\330\010\017\210q\340\004\017\210x\220q\230\001\330\004\020\220\001\220\021\340\004\013\2101";
 static const char __pyx_k_vQa_Rq_Rq_3b_S_Cs_Bc_Ba_F_4q_7[] = "\320\000\020\220\t\230\031\240(\250!\360\006\000\005\n\210\026\210v\220Q\220a\330\004\n\210!\330\004\t\210\024\210R\210q\330\004\t\210\024\210R\210q\330\004\005\330\010\013\2103\210b\220\002\220#\220S\230\002\230\"\230C\230s\240\"\240B\240c\250\023\250B\250a\330\014\r\340\010\014\210F\220!\2204\220q\330\010\013\2107\220!\2201\330\010\016\210a\330\010\016\210a\330\004\013\2105\220\001\220\021";
@@ -7947,7 +7947,7 @@ static PyObject *__pyx_pf_10FasterCode_2xpgn_pv(CYTHON_UNUSED PyObject *__pyx_se
 /* "FasterCode.pyx":310
  * 
  * 
- * def pos_rc(pos: int):             # <<<<<<<<<<<<<<
+ * def pos_rc(pos: int) -> tuple:             # <<<<<<<<<<<<<<
  *     return pos // 8, pos % 8
  * 
 */
@@ -8060,7 +8060,7 @@ static PyObject *__pyx_pf_10FasterCode_4pos_rc(CYTHON_UNUSED PyObject *__pyx_sel
 
   /* "FasterCode.pyx":311
  * 
- * def pos_rc(pos: int):
+ * def pos_rc(pos: int) -> tuple:
  *     return pos // 8, pos % 8             # <<<<<<<<<<<<<<
  * 
  * 
@@ -8078,14 +8078,14 @@ static PyObject *__pyx_pf_10FasterCode_4pos_rc(CYTHON_UNUSED PyObject *__pyx_sel
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2) != (0)) __PYX_ERR(0, 311, __pyx_L1_error);
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
-  __pyx_r = __pyx_t_3;
+  __pyx_r = ((PyObject*)__pyx_t_3);
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
   /* "FasterCode.pyx":310
  * 
  * 
- * def pos_rc(pos: int):             # <<<<<<<<<<<<<<
+ * def pos_rc(pos: int) -> tuple:             # <<<<<<<<<<<<<<
  *     return pos // 8, pos % 8
  * 
 */
@@ -21228,7 +21228,7 @@ static PyObject *__pyx_pf_10FasterCode_76xparse_body(CYTHON_UNUSED PyObject *__p
  * def xparse_body(fen, body):
  *     body = bytes(body, "utf-8")             # <<<<<<<<<<<<<<
  *     fen = bytes(fen, "utf-8")
- *     resp = bytearray(len(body)+14//10)
+ *     resp = bytearray(len(body)*14//10)
 */
   __pyx_t_2 = NULL;
   __Pyx_INCREF((PyObject *)(&PyBytes_Type));
@@ -21249,7 +21249,7 @@ static PyObject *__pyx_pf_10FasterCode_76xparse_body(CYTHON_UNUSED PyObject *__p
  * def xparse_body(fen, body):
  *     body = bytes(body, "utf-8")
  *     fen = bytes(fen, "utf-8")             # <<<<<<<<<<<<<<
- *     resp = bytearray(len(body)+14//10)
+ *     resp = bytearray(len(body)*14//10)
  *     tam = parse_body( fen, body, resp )
 */
   __pyx_t_3 = NULL;
@@ -21270,7 +21270,7 @@ static PyObject *__pyx_pf_10FasterCode_76xparse_body(CYTHON_UNUSED PyObject *__p
   /* "FasterCode.pyx":860
  *     body = bytes(body, "utf-8")
  *     fen = bytes(fen, "utf-8")
- *     resp = bytearray(len(body)+14//10)             # <<<<<<<<<<<<<<
+ *     resp = bytearray(len(body)*14//10)             # <<<<<<<<<<<<<<
  *     tam = parse_body( fen, body, resp )
  *     if tam:
 */
@@ -21278,7 +21278,7 @@ static PyObject *__pyx_pf_10FasterCode_76xparse_body(CYTHON_UNUSED PyObject *__p
   __Pyx_INCREF((PyObject *)(&PyByteArray_Type));
   __pyx_t_3 = ((PyObject *)(&PyByteArray_Type)); 
   __pyx_t_5 = PyObject_Length(__pyx_v_body); if (unlikely(__pyx_t_5 == ((Py_ssize_t)-1))) __PYX_ERR(0, 860, __pyx_L1_error)
-  __pyx_t_6 = PyLong_FromSsize_t((__pyx_t_5 + 0x1)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 860, __pyx_L1_error)
+  __pyx_t_6 = PyLong_FromSsize_t(__Pyx_div_Py_ssize_t((__pyx_t_5 * 14), 10, 1)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 860, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_4 = 1;
   {
@@ -21295,7 +21295,7 @@ static PyObject *__pyx_pf_10FasterCode_76xparse_body(CYTHON_UNUSED PyObject *__p
 
   /* "FasterCode.pyx":861
  *     fen = bytes(fen, "utf-8")
- *     resp = bytearray(len(body)+14//10)
+ *     resp = bytearray(len(body)*14//10)
  *     tam = parse_body( fen, body, resp )             # <<<<<<<<<<<<<<
  *     if tam:
  *         return resp[:tam].decode("utf-8").split("\n")
@@ -21306,7 +21306,7 @@ static PyObject *__pyx_pf_10FasterCode_76xparse_body(CYTHON_UNUSED PyObject *__p
   __pyx_v_tam = parse_body(__pyx_t_7, __pyx_t_8, __pyx_t_9);
 
   /* "FasterCode.pyx":862
- *     resp = bytearray(len(body)+14//10)
+ *     resp = bytearray(len(body)*14//10)
  *     tam = parse_body( fen, body, resp )
  *     if tam:             # <<<<<<<<<<<<<<
  *         return resp[:tam].decode("utf-8").split("\n")
@@ -21333,7 +21333,7 @@ static PyObject *__pyx_pf_10FasterCode_76xparse_body(CYTHON_UNUSED PyObject *__p
     goto __pyx_L0;
 
     /* "FasterCode.pyx":862
- *     resp = bytearray(len(body)+14//10)
+ *     resp = bytearray(len(body)*14//10)
  *     tam = parse_body( fen, body, resp )
  *     if tam:             # <<<<<<<<<<<<<<
  *         return resp[:tam].decode("utf-8").split("\n")
@@ -30007,13 +30007,14 @@ __Pyx_RefNannySetupContext("PyInit_FasterCode", 0);
   /* "FasterCode.pyx":310
  * 
  * 
- * def pos_rc(pos: int):             # <<<<<<<<<<<<<<
+ * def pos_rc(pos: int) -> tuple:             # <<<<<<<<<<<<<<
  *     return pos // 8, pos % 8
  * 
 */
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 310, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_pos, __pyx_mstate_global->__pyx_n_u_int) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_mstate_global->__pyx_n_u_return, __pyx_mstate_global->__pyx_n_u_tuple) < 0) __PYX_ERR(0, 310, __pyx_L1_error)
   __pyx_t_2 = __Pyx_CyFunction_New(&__pyx_mdef_10FasterCode_5pos_rc, 0, __pyx_mstate_global->__pyx_n_u_pos_rc, NULL, __pyx_mstate_global->__pyx_n_u_FasterCode, __pyx_mstate_global->__pyx_d, ((PyObject *)__pyx_mstate_global->__pyx_codeobj_tab[10])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 310, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_2, __pyx_t_3);
@@ -33214,7 +33215,7 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate_global->__pyx_codeobj_tab[9] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_FasterCode_pyx, __pyx_mstate->__pyx_n_u_xpgn_pv, __pyx_k_5_a_6_uCq_q_r, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[9])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 310, 20};
+    const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 1, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 310, 22};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_pos};
     __pyx_mstate_global->__pyx_codeobj_tab[10] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_FasterCode_pyx, __pyx_mstate->__pyx_n_u_pos_rc, __pyx_k_4s_T_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[10])) goto bad;
   }
@@ -33464,9 +33465,9 @@ static int __Pyx_CreateCodeObjects(__pyx_mstatetype *__pyx_mstate) {
     __pyx_mstate_global->__pyx_codeobj_tab[59] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_FasterCode_pyx, __pyx_mstate->__pyx_n_u_fen_ended, __pyx_k_7_5_1, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[59])) goto bad;
   }
   {
-    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 857, 85};
+    const __Pyx_PyCode_New_function_description descr = {2, 0, 0, 4, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 857, 89};
     PyObject* const varnames[] = {__pyx_mstate->__pyx_n_u_fen, __pyx_mstate->__pyx_n_u_body, __pyx_mstate->__pyx_n_u_resp, __pyx_mstate->__pyx_n_u_tam};
-    __pyx_mstate_global->__pyx_codeobj_tab[60] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_FasterCode_pyx, __pyx_mstate->__pyx_n_u_xparse_body, __pyx_k_5_q_q_Q_9AS_c_Be6_q_t2T_q_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[60])) goto bad;
+    __pyx_mstate_global->__pyx_codeobj_tab[60] = __Pyx_PyCode_New(descr, varnames, __pyx_mstate->__pyx_kp_u_FasterCode_pyx, __pyx_mstate->__pyx_n_u_xparse_body, __pyx_k_5_q_q_Q_9AS_ar_1_Be6_q_t2T_q_q, tuple_dedup_map); if (unlikely(!__pyx_mstate_global->__pyx_codeobj_tab[60])) goto bad;
   }
   {
     const __Pyx_PyCode_New_function_description descr = {1, 0, 0, 3, (unsigned int)(CO_OPTIMIZED|CO_NEWLOCALS), 867, 76};
@@ -38322,6 +38323,17 @@ static CYTHON_INLINE PyObject* __Pyx_PyLong_EqObjC(PyObject *op1, PyObject *op2,
         PyObject_RichCompare(op1, op2, Py_EQ));
 }
 
+/* DivInt[Py_ssize_t] */
+static CYTHON_INLINE Py_ssize_t __Pyx_div_Py_ssize_t(Py_ssize_t a, Py_ssize_t b, int b_is_constant) {
+    Py_ssize_t q = a / b;
+    Py_ssize_t r = a - q*b;
+    Py_ssize_t adapt_python = (b_is_constant ?
+        ((r != 0) & ((r < 0) ^ (b < 0))) :
+        ((r != 0) & ((r ^ b) < 0))
+    );
+    return q - adapt_python;
+}
+
 /* decode_c_bytes */
 static CYTHON_INLINE PyObject* __Pyx_decode_c_bytes(
          const char* cstring, Py_ssize_t length, Py_ssize_t start, Py_ssize_t stop,
@@ -38347,17 +38359,6 @@ static CYTHON_INLINE PyObject* __Pyx_decode_c_bytes(
     } else {
         return PyUnicode_Decode(cstring, length, encoding, errors);
     }
-}
-
-/* DivInt[Py_ssize_t] */
-static CYTHON_INLINE Py_ssize_t __Pyx_div_Py_ssize_t(Py_ssize_t a, Py_ssize_t b, int b_is_constant) {
-    Py_ssize_t q = a / b;
-    Py_ssize_t r = a - q*b;
-    Py_ssize_t adapt_python = (b_is_constant ?
-        ((r != 0) & ((r < 0) ^ (b < 0))) :
-        ((r != 0) & ((r ^ b) < 0))
-    );
-    return q - adapt_python;
 }
 
 /* ObjectGetItem */
