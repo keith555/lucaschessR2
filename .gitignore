@@ -1,2 +1,6 @@
 UserData/
 
+.venv/
+__pycache__/
+Resources/Openings/jobava_caissa_7000.bin
+bin/OS/win32/Engines/stockfish/Stockfish-17.1-64.exe
