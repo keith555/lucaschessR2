@@ -11,8 +11,6 @@ import warnings
 
 import Code
 
-warnings.simplefilter("ignore")
-
 n_args = len(sys.argv)
 if n_args == 1:
     import Code.Base.Init
@@ -60,4 +58,5 @@ elif n_args >= 2:
         Code.Analysis.RunAnalysis.run(sys.argv[2])
 
     elif arg == "-healthcheck":
-            sys.exit(0)
+        sys.exit(0)
+
