@@ -6,7 +6,8 @@
       "Bash(\".venv/Scripts/python.exe\" --version)",
       "Bash(\"../../../.venv/Scripts/python.exe\" setup.py build_ext --inplace)",
       "Bash(\"../.venv/Scripts/python.exe\":*)",
-      "Bash(git check-ignore:*)"
+      "Bash(git check-ignore:*)",
+      "Bash(python:*)"
     ],
     "deny": [],
     "ask": []
