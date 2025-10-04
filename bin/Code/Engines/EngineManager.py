@@ -500,7 +500,7 @@ class EngineManager:
 
     def play_time_routine(
             self, game, routine_return, seconds_white, seconds_black, seconds_move, adjusted=0, factor_humanize=0,
-            limit_time_seconds=None
+            limit_time_seconds=None, humanize_config=None
     ):
         self.check_engine()
 
@@ -526,7 +526,9 @@ class EngineManager:
         if factor_humanize:
             if self.mstime_engine or self.depth_engine:
                 seconds_white, seconds_black, seconds_move = 15.0 * 60, 15.0 * 60, 6
-            self.humanize(factor_humanize, game, seconds_white, seconds_black, seconds_move)
+            self.humanize(
+                factor_humanize, game, seconds_white, seconds_black, seconds_move, humanize_config=humanize_config
+            )
         else:
             self.engine.not_humanize()
 
@@ -539,7 +541,7 @@ class EngineManager:
                 play_return, game, seconds_white * 1000, seconds_black * 1000, seconds_move * 1000
             )
 
-    def humanize(self, factor, game, seconds_white, seconds_black, seconds_move):
+    def humanize(self, factor, game, seconds_white, seconds_black, seconds_move, humanize_config=None):
         name_lower = self.name.lower()
         key_lower = getattr(self, "key", "").lower()
         is_maia = False
@@ -565,6 +567,9 @@ class EngineManager:
                 return
 
         log(f"start factor={factor} seconds_white={seconds_white:.2f} seconds_black={seconds_black:.2f} seconds_move={seconds_move:.2f}")
+        config = humanize_config or {}
+        max_share_k = config.get("max_share_k")
+
         # Hay que tener en cuenta
         # Si estamos enla apertura -> mas rápido
         # Si hay muchas opciones -> mas lento
@@ -611,6 +616,19 @@ class EngineManager:
             log(f"average_previous_user={average_previous_user}")
             movetime_seconds = min(0.8 * average_previous_user / 1000, 60, movetime_seconds)  # max 1 minute
             log(f"after average clamp movetime_seconds={movetime_seconds:.3f}")
+
+        k_value = None
+        if max_share_k is not None:
+            try:
+                k_value = float(max_share_k)
+            except (TypeError, ValueError):
+                k_value = None
+        if k_value and k_value > 0:
+            remaining_time = seconds_white if engine_is_white else seconds_black
+            share_cap = remaining_time / k_value if remaining_time > 0 else 0.0
+            if share_cap > 0 and share_cap < movetime_seconds:
+                log(f"share_cap={share_cap:.3f} (k={k_value}) -> movetime_seconds={share_cap:.3f}")
+                movetime_seconds = share_cap
 
         final_delay = movetime_seconds * factor
         log(f"final_delay={final_delay:.3f}")

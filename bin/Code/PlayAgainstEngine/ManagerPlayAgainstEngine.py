@@ -105,6 +105,7 @@ class ManagerPlayAgainstEngine(Manager.Manager):
     last_time_show_arrows = None
     rival_is_thinking = False
     humanize = 0
+    humanize_k = 4
     unlimited_minutes = 3
     is_human_side_white: bool
     opening_line = None
@@ -286,6 +287,7 @@ class ManagerPlayAgainstEngine(Manager.Manager):
         self.limit_pww = dic_var.get("LIMIT_PWW", 90)
 
         self.humanize = dic_var.get("LEVEL_HUMANIZE", 0)
+        self.humanize_k = max(1, int(dic_var.get("LEVEL_HUMANIZE_K", 4) or 4))
 
         if dic_var.get("ACTIVATE_EBOARD"):
             Code.eboard.activate(self.board.dispatch_eboard)
@@ -1281,6 +1283,23 @@ class ManagerPlayAgainstEngine(Manager.Manager):
 
         self.activate_side(is_white)
 
+    def _humanize_config(self):
+        if self.humanize <= 0:
+            return None
+
+        is_maia = False
+        try:
+            is_maia = self.conf_engine.is_maia()
+        except AttributeError:
+            pass
+        nodes_small = bool(self.nodes and self.nodes <= 4)
+        if not (is_maia or nodes_small):
+            return None
+
+        return {
+            "max_share_k": self.humanize_k,
+        }
+
     def play_rival(self):
         self.board.remove_arrows()
         self.tc_rival.start()
@@ -1329,6 +1348,7 @@ class ManagerPlayAgainstEngine(Manager.Manager):
                 self.siBookAjustarFuerza = False
 
         # --------------------------------------------------------------------------------------------------------------
+        humanize_config = self._humanize_config()
         if is_choosed:
             if self.xrival.name.lower().startswith("maia"):
                 try:
@@ -1364,7 +1384,8 @@ class ManagerPlayAgainstEngine(Manager.Manager):
                 seconds_move,
                 adjusted=self.nAjustarFuerza,
                 factor_humanize=self.humanize,
-                limit_time_seconds=self.limit_time_seconds
+                limit_time_seconds=self.limit_time_seconds,
+                humanize_config=humanize_config
             )
 
     def continue_analysis_human_move(self):
@@ -2043,3 +2064,4 @@ class ManagerPlayAgainstEngine(Manager.Manager):
         if self.ayudas_iniciales == 0:
             return True
         return self.hints > 0
+
