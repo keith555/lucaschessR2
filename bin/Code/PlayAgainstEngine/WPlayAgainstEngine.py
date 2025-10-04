@@ -187,10 +187,17 @@ class WPlayAgainstEngine(LCDialog.LCDialog):
             (_("Very slow"), 2),
         )
         self.cb_humanize = Controles.CB(self, li_humanize, 0).set_font(font)
+        self.cb_humanize.capture_changes(self.change_humanize_level)
         lb_humanize = Controles.LB(self, _("To humanize the time it takes for the engine to respond")).set_font(font)
         ly_humanize = Colocacion.H().control(self.cb_humanize).control(lb_humanize).relleno()
 
+        self.sb_humanize_k = Controles.SB(self, 4, 1, 20).set_font(font).relative_width(60)
+        self.lb_humanize_k = Controles.LB(self, _("Humanization divisor (K)")).set_font(font)
+        ly_humanize_k = Colocacion.H().control(self.sb_humanize_k).control(self.lb_humanize_k).relleno()
+
         ly.otro(ly_humanize)
+        ly.otro(ly_humanize_k)
+        self.update_humanize_controls()
 
         nueva_tab(ly, _("Basic configuration"))
 
@@ -728,6 +735,7 @@ class WPlayAgainstEngine(LCDialog.LCDialog):
         # self.bt_cancel_rtime.setVisible(not emulate_movetime)
 
         self.test_unlimited()
+        self.update_humanize_controls()
 
     def cambiada_tab(self, num):
         if num == self.tab_advanced:
@@ -766,6 +774,17 @@ class WPlayAgainstEngine(LCDialog.LCDialog):
             self.cancelar_nodes()
 
         self.test_unlimited()
+
+
+    def change_humanize_level(self):
+        self.update_humanize_controls()
+
+    def update_humanize_controls(self):
+        rival = getattr(self, 'rival', None)
+        show_k = bool(rival and rival.is_maia())
+        self.lb_humanize_k.setVisible(show_k)
+        self.sb_humanize_k.setVisible(show_k)
+        self.sb_humanize_k.setEnabled(self.cb_humanize.valor() > 0)
 
     def change_time(self):
         # num = self.ed_rtime.textoFloat()
@@ -1055,6 +1074,7 @@ class WPlayAgainstEngine(LCDialog.LCDialog):
         dr["ENGINE_UNLIMITED"] = self.cb_unlimited.valor()
 
         dic["LEVEL_HUMANIZE"] = self.cb_humanize.valor()
+        dic["LEVEL_HUMANIZE_K"] = self.sb_humanize_k.valor()
         if Code.eboard:
             dic["ACTIVATE_EBOARD"] = self.chb_eboard.valor()
         # dic["ANALYSIS_BAR"] = self.chb_analysis_bar.valor()
@@ -1132,6 +1152,8 @@ class WPlayAgainstEngine(LCDialog.LCDialog):
         self.cb_unlimited.set_value(dr.get("ENGINE_UNLIMITED", 3))
 
         self.cb_humanize.set_value(dic.get("LEVEL_HUMANIZE", 0))
+        self.sb_humanize_k.set_value(dic.get("LEVEL_HUMANIZE_K", 4))
+        self.update_humanize_controls()
         if Code.eboard:
             self.chb_eboard.set_value(dic.get("ACTIVATE_EBOARD", False))
         # self.chb_analysis_bar.set_value(dic.get("ANALYSIS_BAR", False))
@@ -1657,3 +1679,4 @@ class WMantenimientoConfiguraciones(LCDialog.LCDialog):
                 if reg[0] == result:
                     self.grid.goto(pos, 0)
                     return
+

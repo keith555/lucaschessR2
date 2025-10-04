@@ -1330,12 +1330,24 @@ class ManagerPlayAgainstEngine(Manager.Manager):
 
         # --------------------------------------------------------------------------------------------------------------
         if is_choosed:
+            if self.xrival.name.lower().startswith("maia"):
+                try:
+                    import sys
+                    print(f"[Humanize] book move selected humanize={self.humanize}", file=sys.stderr)
+                except Exception:
+                    pass
             rm_rival = EngineResponse.EngineResponse("Opening", self.is_engine_side_white)
             rm_rival.from_sq = from_sq
             rm_rival.to_sq = to_sq
             rm_rival.promotion = promotion
             self.rival_has_moved(rm_rival)
         else:
+            if self.xrival.name.lower().startswith("maia"):
+                try:
+                    import sys
+                    print(f"[Humanize] engine search humanize={self.humanize}", file=sys.stderr)
+                except Exception:
+                    pass
             self.thinking(True)
             if self.timed:
                 seconds_white = self.tc_white.pending_time

@@ -540,6 +540,31 @@ class EngineManager:
             )
 
     def humanize(self, factor, game, seconds_white, seconds_black, seconds_move):
+        name_lower = self.name.lower()
+        key_lower = getattr(self, "key", "").lower()
+        is_maia = False
+        try:
+            if self.confMotor.is_maia():
+                is_maia = True
+        except AttributeError:
+            pass
+        if not is_maia and ("maia" in name_lower or "maia" in key_lower):
+            is_maia = True
+
+        debug = is_maia
+        if debug:
+            import sys
+
+            def log(msg: str) -> None:
+                try:
+                    print(f"[Humanize] {msg}", file=sys.stderr)
+                except Exception:
+                    pass
+        else:
+            def log(msg: str) -> None:
+                return
+
+        log(f"start factor={factor} seconds_white={seconds_white:.2f} seconds_black={seconds_black:.2f} seconds_move={seconds_move:.2f}")
         # Hay que tener en cuenta
         # Si estamos enla apertura -> mas rápido
         # Si hay muchas opciones -> mas lento
@@ -548,11 +573,13 @@ class EngineManager:
         # para el resto
         movestogo = 40
         last_position = game.last_position
-        if last_position.is_white:
+        engine_is_white = last_position.is_white
+        if engine_is_white:
             movetime_seconds = seconds_white + movestogo * seconds_move
         else:
             movetime_seconds = seconds_black + movestogo * seconds_move
         movetime_seconds = movetime_seconds * 9 / (movestogo * 10)
+        log(f"baseline movetime_seconds={movetime_seconds:.3f}")
 
         porc = 100.0
         if last_position.num_moves < 40:
@@ -569,14 +596,40 @@ class EngineManager:
         porc *= x / 100.0
 
         movetime_seconds *= porc / 100.0
+        log(f"after porc={porc:.2f} movetime_seconds={movetime_seconds:.3f}")
 
         # movetime_seconds = max(random.randint(1, 4), movetime_seconds)
 
-        average_previous_user = game.average_mstime_user(5)
-        if average_previous_user:
-            movetime_seconds = min(0.8 * average_previous_user / 1000, 60, movetime_seconds)  # max 1 minute
+        opponent_avg_ms = self._average_mstime_for_side(game, not engine_is_white, 5)
+        if opponent_avg_ms:
+            opponent_avg_seconds = opponent_avg_ms / 1000.0
+            movetime_seconds = max(movetime_seconds, opponent_avg_seconds)
+            log(f"opponent_avg_seconds={opponent_avg_seconds:.3f} -> movetime_seconds={movetime_seconds:.3f}")
 
-        self.engine.set_humanize(movetime_seconds * factor)
+        average_previous_user = 0 if is_maia else game.average_mstime_user(5)
+        if average_previous_user:
+            log(f"average_previous_user={average_previous_user}")
+            movetime_seconds = min(0.8 * average_previous_user / 1000, 60, movetime_seconds)  # max 1 minute
+            log(f"after average clamp movetime_seconds={movetime_seconds:.3f}")
+
+        final_delay = movetime_seconds * factor
+        log(f"final_delay={final_delay:.3f}")
+        self.engine.set_humanize(final_delay)
+
+    @staticmethod
+    def _average_mstime_for_side(game, is_white, sample):
+        total = 0
+        count = 0
+        for move in reversed(game.li_moves):
+            if move.time_ms <= 0:
+                continue
+            if move.is_white() == is_white:
+                total += move.time_ms
+                count += 1
+                if count >= sample:
+                    break
+        return total / count if count else 0
+
 
     def log_open(self):
         if self.fichero_log:

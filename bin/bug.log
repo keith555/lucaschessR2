@@ -798,3 +798,577 @@
 [PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=61
 [PAE] Book has no move for this position
 [PAE] Engine book try: ok=False
+[PAE] Rival book set: name=jobava_caissa_7000 depth=0 mode=ap
+[PAE] Using session books for UI ratings: jobava_caissa_7000
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=1
+[PAE] Book selected pv=d7d5
+2025-10-03 19:34:35.111648
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Board\BoardElements.py", line 348, in mouseReleaseEvent
+    self.board.try_to_move(self, event.scenePos(), event.button())
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Board\Board.py", line 1862, in try_to_move
+    if not self.mensajero(from_sq, to_sq):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Manager.py", line 2445, in player_has_moved_base
+    return self.messenger(from_sq, to_sq, promotion)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 1747, in player_has_moved
+    self.play_next_move()
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 969, in play_next_move
+    self.play_rival()
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 1373, in play_rival
+    delay = self.xrival.compute_human_delay(
+AttributeError: 'EngineManager' object has no attribute 'compute_human_delay'
+[PAE] Rival book set: name=jobava_caissa_7000 depth=0 mode=ap
+[PAE] Using session books for UI ratings: jobava_caissa_7000
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=1
+[PAE] Book selected pv=g8f6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): g8f6
+[PAE] Book query: book=jobava_caissa_7000 entries=2 mode=ap ply=3
+[PAE] Book selected pv=d7d5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): d7d5
+[PAE] Book query: book=jobava_caissa_7000 entries=9 mode=ap ply=5
+[PAE] Book selected pv=e7e6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): e7e6
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=7
+[PAE] Book selected pv=c7c5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): c7c5
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=9
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=932.82 seconds_black=939.99 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.150
+[Humanize] after porc=27.75 movetime_seconds=8.367
+[Humanize] average_previous_user=2.5
+[Humanize] after average clamp movetime_seconds=0.002
+[Humanize] final_delay=0.002
+[PAE] Rival book set: name=jobava_caissa_7000 depth=0 mode=ap
+[PAE] Using session books for UI ratings: jobava_caissa_7000
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=1
+[PAE] Book selected pv=g8f6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): g8f6
+[PAE] Book query: book=jobava_caissa_7000 entries=2 mode=ap ply=3
+[PAE] Book selected pv=d7d5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): d7d5
+[PAE] Book query: book=jobava_caissa_7000 entries=9 mode=ap ply=5
+[PAE] Book selected pv=c7c5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): c7c5
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=7
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=928.10 seconds_black=929.99 seconds_move=10.00
+[Humanize] baseline movetime_seconds=29.925
+[Humanize] after porc=23.32 movetime_seconds=6.978
+2025-10-03 22:26:39.517616
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Board\BoardElements.py", line 348, in mouseReleaseEvent
+    self.board.try_to_move(self, event.scenePos(), event.button())
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Board\Board.py", line 1862, in try_to_move
+    if not self.mensajero(from_sq, to_sq):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Manager.py", line 2445, in player_has_moved_base
+    return self.messenger(from_sq, to_sq, promotion)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 1704, in player_has_moved
+    self.play_next_move()
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 966, in play_next_move
+    self.play_rival()
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 1359, in play_rival
+    self.xrival.play_time_routine(
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Engines\EngineManager.py", line 529, in play_time_routine
+    self.humanize(factor_humanize, game, seconds_white, seconds_black, seconds_move)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Engines\EngineManager.py", line 603, in humanize
+    opponent_avg_ms = self._average_mstime_for_side(game, not engine_is_white, 5)
+AttributeError: 'EngineManager' object has no attribute '_average_mstime_for_side'
+2025-10-03 22:31:27.493927
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 503, in set_clock
+    def set_clock(self):
+KeyboardInterrupt
+2025-10-03 22:31:32.492055
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 503, in set_clock
+    def set_clock(self):
+KeyboardInterrupt
+2025-10-03 22:31:34.491799
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\PlayAgainstEngine\ManagerPlayAgainstEngine.py", line 503, in set_clock
+    def set_clock(self):
+KeyboardInterrupt
+[PAE] Rival book set: name=jobava_caissa_7000 depth=0 mode=ap
+[PAE] Using session books for UI ratings: jobava_caissa_7000
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=1
+[PAE] Book selected pv=g8f6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): g8f6
+[PAE] Book query: book=jobava_caissa_7000 entries=2 mode=ap ply=3
+[PAE] Book selected pv=d7d5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): d7d5
+[PAE] Book query: book=jobava_caissa_7000 entries=9 mode=ap ply=5
+[PAE] Book selected pv=g7g6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): g7g6
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=7
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=929.92 seconds_black=929.99 seconds_move=10.00
+[Humanize] baseline movetime_seconds=29.925
+[Humanize] after porc=19.14 movetime_seconds=5.728
+[Humanize] opponent_avg_seconds=2.521 -> movetime_seconds=5.728
+[Humanize] final_delay=5.728
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=9
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=900.14 seconds_black=934.22 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.020
+[Humanize] after porc=23.50 movetime_seconds=7.055
+[Humanize] opponent_avg_seconds=9.972 -> movetime_seconds=9.972
+[Humanize] final_delay=9.972
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=11
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=905.10 seconds_black=934.19 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.019
+[Humanize] after porc=29.12 movetime_seconds=8.742
+[Humanize] opponent_avg_seconds=10.195 -> movetime_seconds=10.195
+[Humanize] final_delay=10.195
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=13
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=861.11 seconds_black=933.87 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.012
+[Humanize] after porc=27.90 movetime_seconds=8.373
+[Humanize] opponent_avg_seconds=20.584 -> movetime_seconds=20.584
+[Humanize] final_delay=20.584
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=15
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=853.00 seconds_black=923.28 seconds_move=10.00
+[Humanize] baseline movetime_seconds=29.774
+[Humanize] after porc=40.12 movetime_seconds=11.945
+[Humanize] opponent_avg_seconds=23.827 -> movetime_seconds=23.827
+[Humanize] final_delay=23.827
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=17
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=819.13 seconds_black=909.44 seconds_move=10.00
+[Humanize] baseline movetime_seconds=29.462
+[Humanize] after porc=31.82 movetime_seconds=9.375
+[Humanize] opponent_avg_seconds=32.157 -> movetime_seconds=32.157
+[Humanize] final_delay=32.157
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=19
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=788.65 seconds_black=887.19 seconds_move=10.00
+[Humanize] baseline movetime_seconds=28.962
+[Humanize] after porc=48.00 movetime_seconds=13.902
+[Humanize] opponent_avg_seconds=32.299 -> movetime_seconds=32.299
+[Humanize] final_delay=32.299
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=21
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=741.46 seconds_black=864.78 seconds_move=10.00
+[Humanize] baseline movetime_seconds=28.458
+[Humanize] after porc=44.72 movetime_seconds=12.726
+[Humanize] opponent_avg_seconds=42.727 -> movetime_seconds=42.727
+[Humanize] final_delay=42.727
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=23
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=642.15 seconds_black=832.02 seconds_move=10.00
+[Humanize] baseline movetime_seconds=27.720
+[Humanize] after porc=40.02 movetime_seconds=11.094
+[Humanize] opponent_avg_seconds=53.792 -> movetime_seconds=53.792
+[Humanize] final_delay=53.792
+[PAE] Rival book set: name=jobava_caissa_7000 depth=0 mode=ap
+[PAE] Using session books for UI ratings: jobava_caissa_7000
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=1
+[PAE] Book selected pv=g8f6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): g8f6
+[PAE] Book query: book=jobava_caissa_7000 entries=2 mode=ap ply=3
+[PAE] Book selected pv=d7d5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): d7d5
+[PAE] Book query: book=jobava_caissa_7000 entries=9 mode=ap ply=5
+[PAE] Book selected pv=c8f5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): c8f5
+[PAE] Book query: book=jobava_caissa_7000 entries=7 mode=ap ply=7
+[PAE] Book selected pv=e7e6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): e7e6
+[PAE] Book query: book=jobava_caissa_7000 entries=1 mode=ap ply=9
+[PAE] Book selected pv=f5g6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): f5g6
+[PAE] Book query: book=jobava_caissa_7000 entries=2 mode=ap ply=11
+[PAE] Book selected pv=h7h6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): h7h6
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=13
+[PAE] Book selected pv=a7a6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): a7a6
+[PAE] Book query: book=jobava_caissa_7000 entries=1 mode=ap ply=15
+[PAE] Book selected pv=g6d3
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): g6d3
+[PAE] Book query: book=jobava_caissa_7000 entries=1 mode=ap ply=17
+[PAE] Book selected pv=c7c5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): c7c5
+[PAE] Book query: book=jobava_caissa_7000 entries=1 mode=ap ply=19
+[PAE] Book selected pv=b8c6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): b8c6
+[PAE] Book query: book=jobava_caissa_7000 entries=2 mode=ap ply=21
+[PAE] Book selected pv=c5c4
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): c5c4
+[PAE] Book query: book=jobava_caissa_7000 entries=1 mode=ap ply=23
+[PAE] Book selected pv=b7b5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): b7b5
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=25
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=892.05 seconds_black=1019.97 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.949
+[Humanize] after porc=41.65 movetime_seconds=13.307
+[Humanize] opponent_avg_seconds=13.711 -> movetime_seconds=13.711
+[Humanize] final_delay=13.711
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=27
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=887.62 seconds_black=1016.13 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.863
+[Humanize] after porc=55.12 movetime_seconds=17.563
+[Humanize] opponent_avg_seconds=16.227 -> movetime_seconds=17.563
+[Humanize] final_delay=17.563
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=29
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=888.97 seconds_black=1008.44 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.690
+[Humanize] after porc=62.15 movetime_seconds=19.695
+[Humanize] opponent_avg_seconds=17.328 -> movetime_seconds=19.695
+[Humanize] final_delay=19.695
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=31
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=635.57 seconds_black=998.61 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.469
+[Humanize] after porc=66.70 movetime_seconds=20.990
+[Humanize] opponent_avg_seconds=30.884 -> movetime_seconds=30.884
+[Humanize] final_delay=30.884
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=33
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=554.91 seconds_black=977.62 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.997
+[Humanize] after porc=50.02 movetime_seconds=15.504
+[Humanize] opponent_avg_seconds=47.750 -> movetime_seconds=47.750
+[Humanize] final_delay=47.750
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=35
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=553.36 seconds_black=939.83 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.146
+[Humanize] after porc=58.24 movetime_seconds=17.557
+[Humanize] opponent_avg_seconds=45.039 -> movetime_seconds=45.039
+[Humanize] final_delay=45.039
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=37
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=472.94 seconds_black=904.68 seconds_move=10.00
+[Humanize] baseline movetime_seconds=29.355
+[Humanize] after porc=69.01 movetime_seconds=20.258
+[Humanize] opponent_avg_seconds=60.235 -> movetime_seconds=60.235
+[Humanize] final_delay=60.235
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=39
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=445.37 seconds_black=854.33 seconds_move=10.00
+[Humanize] baseline movetime_seconds=28.222
+[Humanize] after porc=77.70 movetime_seconds=21.929
+[Humanize] opponent_avg_seconds=66.020 -> movetime_seconds=66.020
+[Humanize] final_delay=66.020
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=41
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=433.15 seconds_black=798.20 seconds_move=10.00
+[Humanize] baseline movetime_seconds=26.959
+[Humanize] after porc=62.78 movetime_seconds=16.925
+[Humanize] opponent_avg_seconds=50.486 -> movetime_seconds=50.486
+[Humanize] final_delay=50.486
+[PAE] Rival book set: name=jobava_caissa_7000 depth=0 mode=ap
+[PAE] Using session books for UI ratings: jobava_caissa_7000
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=1
+[PAE] Book selected pv=g8f6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): g8f6
+[PAE] Book query: book=jobava_caissa_7000 entries=2 mode=ap ply=3
+[PAE] Book selected pv=d7d5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): d7d5
+[PAE] Book query: book=jobava_caissa_7000 entries=9 mode=ap ply=5
+[PAE] Book selected pv=c8f5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): c8f5
+[PAE] Book query: book=jobava_caissa_7000 entries=3 mode=ap ply=7
+[PAE] Book selected pv=e7e6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): e7e6
+[PAE] Book query: book=jobava_caissa_7000 entries=6 mode=ap ply=9
+[PAE] Book selected pv=f8d6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): f8d6
+[PAE] Book query: book=jobava_caissa_7000 entries=2 mode=ap ply=11
+[PAE] Book selected pv=d6f4
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): d6f4
+[PAE] Book query: book=jobava_caissa_7000 entries=1 mode=ap ply=13
+[PAE] Book selected pv=f5g6
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): f5g6
+[PAE] Book query: book=jobava_caissa_7000 entries=1 mode=ap ply=15
+[PAE] Book selected pv=h7h5
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): h7h5
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=17
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=936.96 seconds_black=980.00 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.050
+[Humanize] after porc=35.15 movetime_seconds=10.914
+[Humanize] opponent_avg_seconds=8.674 -> movetime_seconds=10.914
+[Humanize] final_delay=10.914
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=19
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=942.64 seconds_black=978.97 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.027
+[Humanize] after porc=44.40 movetime_seconds=13.776
+[Humanize] opponent_avg_seconds=6.885 -> movetime_seconds=13.776
+[Humanize] final_delay=13.776
+[PAE] Book query: book=jobava_caissa_7000 entries=1 mode=ap ply=17
+[PAE] Book selected pv=f6g8
+[Humanize] book move selected humanize=1
+[PAE] Mark move as book (engine): f6g8
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=19
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=954.96 seconds_black=985.12 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.165
+[Humanize] after porc=32.80 movetime_seconds=10.222
+[Humanize] opponent_avg_seconds=5.294 -> movetime_seconds=10.222
+[Humanize] final_delay=10.222
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=21
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=925.61 seconds_black=984.80 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.158
+[Humanize] after porc=49.88 movetime_seconds=15.542
+[Humanize] opponent_avg_seconds=10.485 -> movetime_seconds=15.542
+[Humanize] final_delay=15.542
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=23
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=930.61 seconds_black=979.25 seconds_move=10.00
+[Humanize] baseline movetime_seconds=31.033
+[Humanize] after porc=39.10 movetime_seconds=12.134
+[Humanize] opponent_avg_seconds=10.842 -> movetime_seconds=12.134
+[Humanize] final_delay=12.134
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=25
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=911.15 seconds_black=977.06 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.984
+[Humanize] after porc=49.00 movetime_seconds=15.182
+[Humanize] opponent_avg_seconds=16.297 -> movetime_seconds=16.297
+[Humanize] final_delay=16.297
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=27
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=819.78 seconds_black=970.65 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.840
+[Humanize] after porc=49.92 movetime_seconds=15.395
+[Humanize] opponent_avg_seconds=35.958 -> movetime_seconds=35.958
+[Humanize] final_delay=35.958
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=29
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=815.97 seconds_black=944.58 seconds_move=10.00
+[Humanize] baseline movetime_seconds=30.253
+[Humanize] after porc=58.30 movetime_seconds=17.638
+[Humanize] opponent_avg_seconds=37.798 -> movetime_seconds=37.798
+[Humanize] final_delay=37.798
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=31
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=804.05 seconds_black=916.75 seconds_move=10.00
+[Humanize] baseline movetime_seconds=29.627
+[Humanize] after porc=57.42 movetime_seconds=17.012
+[Humanize] opponent_avg_seconds=34.314 -> movetime_seconds=34.314
+[Humanize] final_delay=34.314
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=33
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=745.35 seconds_black=892.34 seconds_move=10.00
+[Humanize] baseline movetime_seconds=29.078
+[Humanize] after porc=56.12 movetime_seconds=16.318
+[Humanize] opponent_avg_seconds=47.052 -> movetime_seconds=47.052
+[Humanize] final_delay=47.052
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=35
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=662.62 seconds_black=855.20 seconds_move=10.00
+[Humanize] baseline movetime_seconds=28.242
+[Humanize] after porc=59.52 movetime_seconds=16.810
+[Humanize] opponent_avg_seconds=59.707 -> movetime_seconds=59.707
+[Humanize] final_delay=59.707
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=37
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=311.96 seconds_black=805.38 seconds_move=10.00
+[Humanize] baseline movetime_seconds=27.121
+[Humanize] after porc=46.73 movetime_seconds=12.674
+[Humanize] opponent_avg_seconds=109.572 -> movetime_seconds=109.572
+[Humanize] final_delay=109.572
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=39
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=286.95 seconds_black=705.73 seconds_move=10.00
+[Humanize] baseline movetime_seconds=24.879
+[Humanize] after porc=51.07 movetime_seconds=12.706
+[Humanize] opponent_avg_seconds=113.811 -> movetime_seconds=113.811
+[Humanize] final_delay=113.811
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=41
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=270.65 seconds_black=601.90 seconds_move=10.00
+[Humanize] baseline movetime_seconds=22.543
+[Humanize] after porc=81.76 movetime_seconds=18.431
+[Humanize] opponent_avg_seconds=114.687 -> movetime_seconds=114.687
+[Humanize] final_delay=114.687
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=43
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=167.72 seconds_black=497.18 seconds_move=10.00
+[Humanize] baseline movetime_seconds=20.187
+[Humanize] after porc=88.16 movetime_seconds=17.797
+[Humanize] opponent_avg_seconds=123.533 -> movetime_seconds=123.533
+[Humanize] final_delay=123.533
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=45
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=82.98 seconds_black=383.54 seconds_move=10.00
+[Humanize] baseline movetime_seconds=17.630
+[Humanize] after porc=71.89 movetime_seconds=12.674
+[Humanize] opponent_avg_seconds=123.936 -> movetime_seconds=123.936
+[Humanize] final_delay=123.936
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=47
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=811.32 seconds_black=269.54 seconds_move=10.00
+[Humanize] baseline movetime_seconds=15.065
+[Humanize] after porc=91.02 movetime_seconds=13.712
+[Humanize] opponent_avg_seconds=91.887 -> movetime_seconds=91.887
+[Humanize] final_delay=91.887
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=49
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=508.58 seconds_black=187.54 seconds_move=10.00
+[Humanize] baseline movetime_seconds=13.220
+[Humanize] after porc=89.25 movetime_seconds=11.799
+[Humanize] opponent_avg_seconds=147.434 -> movetime_seconds=147.434
+[Humanize] final_delay=147.434
+[PAE] Book query: book=jobava_caissa_7000 entries=0 mode=ap ply=51
+[PAE] Book has no move for this position
+[Humanize] engine search humanize=1
+[Humanize] start factor=1 seconds_white=497.82 seconds_black=49.99 seconds_move=10.00
+[Humanize] baseline movetime_seconds=10.125
+[Humanize] after porc=74.80 movetime_seconds=7.573
+[Humanize] opponent_avg_seconds=146.324 -> movetime_seconds=146.324
+[Humanize] final_delay=146.324
+2025-10-04 13:32:02.211526
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\MainWindow\WBase.py", line 400, in run_action
+    self.manager.run_action(self.sender().key)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 585, in run_action
+    self.menu_tools()
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 833, in menu_tools
+    self.menuTools_run(resp)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 870, in menuTools_run
+    self.database(accion, valor)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 963, in database
+    w = WindowDatabase.WBDatabase(self.main_window, self, dbpath, is_temporary, False)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WindowDatabase.py", line 43, in __init__
+    self.wsummary = WDB_Summary.WSummary(procesador, self, self.db_games, siMoves=False)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 98, in __init__
+    self.engine_panel = EngineCandidatesPanel(self, self.procesador)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 528, in __init__
+    self.lbDepth = Controles.LB(self, "").anchoFijo(120)
+AttributeError: 'LB' object has no attribute 'anchoFijo'. Did you mean: 'altoFijo'?
+2025-10-04 13:32:10.740545
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\MainWindow\WBase.py", line 400, in run_action
+    self.manager.run_action(self.sender().key)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 585, in run_action
+    self.menu_tools()
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 833, in menu_tools
+    self.menuTools_run(resp)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 870, in menuTools_run
+    self.database(accion, valor)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 963, in database
+    w = WindowDatabase.WBDatabase(self.main_window, self, dbpath, is_temporary, False)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WindowDatabase.py", line 43, in __init__
+    self.wsummary = WDB_Summary.WSummary(procesador, self, self.db_games, siMoves=False)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 98, in __init__
+    self.engine_panel = EngineCandidatesPanel(self, self.procesador)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 528, in __init__
+    self.lbDepth = Controles.LB(self, "").anchoFijo(120)
+AttributeError: 'LB' object has no attribute 'anchoFijo'. Did you mean: 'altoFijo'?
+2025-10-04 13:32:45.251145
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\MainWindow\WBase.py", line 400, in run_action
+    self.manager.run_action(self.sender().key)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 585, in run_action
+    self.menu_tools()
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 833, in menu_tools
+    self.menuTools_run(resp)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 870, in menuTools_run
+    self.database(accion, valor)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 963, in database
+    w = WindowDatabase.WBDatabase(self.main_window, self, dbpath, is_temporary, False)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WindowDatabase.py", line 43, in __init__
+    self.wsummary = WDB_Summary.WSummary(procesador, self, self.db_games, siMoves=False)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 98, in __init__
+    self.engine_panel = EngineCandidatesPanel(self, self.procesador)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 528, in __init__
+    self.lbDepth = Controles.LB(self, "").anchoFijo(120)
+AttributeError: 'LB' object has no attribute 'anchoFijo'. Did you mean: 'altoFijo'?
+2025-10-04 13:32:51.318851
+Traceback (most recent call last):
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\MainWindow\WBase.py", line 400, in run_action
+    self.manager.run_action(self.sender().key)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 585, in run_action
+    self.menu_tools()
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 833, in menu_tools
+    self.menuTools_run(resp)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 870, in menuTools_run
+    self.database(accion, valor)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Procesador.py", line 963, in database
+    w = WindowDatabase.WBDatabase(self.main_window, self, dbpath, is_temporary, False)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WindowDatabase.py", line 43, in __init__
+    self.wsummary = WDB_Summary.WSummary(procesador, self, self.db_games, siMoves=False)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 98, in __init__
+    self.engine_panel = EngineCandidatesPanel(self, self.procesador)
+  File "c:\softwareDevelopment\lucas_chess\lucaschessR2\bin\Code\Databases\WDB_Summary.py", line 528, in __init__
+    self.lbDepth = Controles.LB(self, "").anchoFijo(120)
+AttributeError: 'LB' object has no attribute 'anchoFijo'. Did you mean: 'altoFijo'?
